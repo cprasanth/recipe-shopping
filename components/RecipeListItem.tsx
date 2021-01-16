@@ -29,7 +29,7 @@ const RecipeListItem = ({ name, id, onPress }: any) => {
           }
         >
           <View style={styles.buttonIcon}>
-            <Text style={styles.buttonText}>Add to list</Text>
+            <Text style={styles.buttonText}>Add to basket</Text>
           </View>
         </TouchableHighlight>
         <TouchableHighlight

@@ -10,7 +10,7 @@ import Colors from '../constants/Colors';
 
 const ShoppingListItem = ({ ingredient }: any) => {
   const dispatch = useAppDispatch();
-  const { id, name, quantity, unit }: any = ingredient;
+  const { id, name, quantity }: any = ingredient;
   return (
     <TouchableHighlight
       underlayColor={Colors.light.tint}
@@ -20,7 +20,7 @@ const ShoppingListItem = ({ ingredient }: any) => {
         <View style={styles.details}>
           <Text style={styles.title}>{name}</Text>
           <Text style={styles.title}>
-            {quantity} {unit}
+            {quantity}
           </Text>
         </View>
         <TouchableHighlight

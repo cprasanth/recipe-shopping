@@ -58,28 +58,27 @@ const RecipeScreen = (props: any) => {
   };
   const recipeListData = Object.keys(recipeData);
   return (
-      <View style={styles.container}>
-        {recipeListData.length > 0 ? (
-          <FlatList
-            data={recipeListData}
-            keyExtractor={keyExtractor}
-            renderItem={renderRecipe}
-           
-          />
-        ) : (
-          <Text style={styles.emptyText}>No recipes found!</Text>
-        )}
-        <View style={styles.formContainer}>
-          <Text>New recipe</Text>
-          <TextInput
-            style={styles.input}
-            onChangeText={(text) => onChangeName(text)}
-            value={newRecipe}
-            placeholder='Enter here...'
-          />
-          <Button title='Add Recipe' onPress={addRecipe} />
-        </View>
+    <View style={styles.container}>
+      {recipeListData.length < 1 && (
+        <Text style={styles.emptyText}>No recipes found!</Text>
+      )}
+      <FlatList
+        data={recipeListData}
+        keyExtractor={keyExtractor}
+        renderItem={renderRecipe}
+      />
+      <View style={styles.formContainer}>
+        <Text style={styles.heading}>Add Recipe</Text>
+        <Text>Recipe name</Text>
+        <TextInput
+          style={styles.input}
+          onChangeText={(text) => onChangeName(text)}
+          value={newRecipe}
+          placeholder='Enter name here...'
+        />
+        <Button title='Add Recipe' onPress={addRecipe} />
       </View>
+    </View>
   );
 };
 
@@ -100,6 +99,7 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     textAlign: 'center',
+    marginTop: 30,
   },
   formContainer: {
     paddingTop: 30,
@@ -107,6 +107,10 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     paddingBottom: 30,
     backgroundColor: Colors.light.grey,
+  },
+  heading: {
+    fontSize: 20,
+    marginBottom: 20,
   },
 });
 

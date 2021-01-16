@@ -12,6 +12,7 @@ import { View, Text } from '../components/Themed';
 import { useAppDispatch, useAppState } from '../AppStateProvider';
 import { v4 as uuidv4 } from 'uuid';
 import { Ingredient, Recipe } from '../types';
+import Colors from '../constants/Colors';
 
 const keyExtractor = (id: string) => id;
 
@@ -19,10 +20,9 @@ const IngredientsScreen = (props: any) => {
   const dispatch = useAppDispatch();
   const [newIngredient, setNewIngredient] = useState({
     name: '',
-    quantity: 0,
-    unit: '',
+    quantity: '',
   });
-  const { name, quantity, unit } = newIngredient;
+  const { name, quantity } = newIngredient;
   const recipeId = props.route.params.recipeId;
   const recipeData = useAppState()['recipes'] as Recipe;
   const recipe = recipeData[recipeId] as Recipe;
@@ -33,7 +33,11 @@ const IngredientsScreen = (props: any) => {
   };
 
   const addIngredient = () => {
-    if (name !== '' && quantity !== 0 && unit !== '') {
+    if (name === '') {
+      alert('Enter ingredient name');
+    } else if (quantity === '') {
+      alert('Enter quantity');
+    } else {
       dispatch({
         type: 'ADD_INGREDIENT',
         payload: {
@@ -41,13 +45,11 @@ const IngredientsScreen = (props: any) => {
           id: uuidv4(),
           name,
           quantity,
-          unit,
         },
       });
       setNewIngredient({
         name: '',
-        quantity: 0,
-        unit: '',
+        quantity: '',
       });
       Keyboard.dismiss();
     }
@@ -63,31 +65,32 @@ const IngredientsScreen = (props: any) => {
   const ingredientListData = ingredientsData && Object.keys(ingredientsData);
   return (
     <View style={styles.container}>
-      {ingredientListData && ingredientListData.length > 0 ? (
-        <FlatList
-          data={ingredientListData}
-          keyExtractor={keyExtractor}
-          renderItem={renderIngredients}
-        />
-      ) : (
+      {ingredientListData && ingredientListData.length < 1 && (
         <Text style={styles.emptyText}>No ingredients found!</Text>
       )}
-      <TextInput
-        style={styles.input}
-        onChangeText={(text) => onChangeText(text, 'name')}
-        value={name}
+      <FlatList
+        data={ingredientListData}
+        keyExtractor={keyExtractor}
+        renderItem={renderIngredients}
       />
-      <TextInput
-        style={styles.input}
-        onChangeText={(text) => onChangeText(text, 'quantity')}
-        value={quantity.toString()}
-      />
-      <TextInput
-        style={styles.input}
-        onChangeText={(text) => onChangeText(text, 'unit')}
-        value={unit}
-      />
-      <Button title='Add Recipe' onPress={addIngredient} />
+      <View style={styles.formContainer}>
+        <Text style={styles.heading}>Add ingredient</Text>
+        <Text>Name</Text>
+        <TextInput
+          style={styles.input}
+          onChangeText={(text) => onChangeText(text, 'name')}
+          value={name}
+          placeholder='Enter name here...'
+        />
+        <Text>Quantity</Text>
+        <TextInput
+          style={styles.input}
+          onChangeText={(text) => onChangeText(text, 'quantity')}
+          value={quantity.toString()}
+          placeholder='Enter quantity here...'
+        />
+        <Button title='Add Ingredient' onPress={addIngredient} />
+      </View>
     </View>
   );
 };
@@ -102,9 +105,25 @@ const styles = StyleSheet.create({
     height: 40,
     borderColor: 'gray',
     borderWidth: 1,
+    marginTop: 5,
+    marginBottom: 10,
+    backgroundColor: Colors.dark.tint,
+    padding: 10,
   },
   emptyText: {
     textAlign: 'center',
+    marginTop: 30,
+  },
+  heading: {
+    fontSize: 20,
+    marginBottom: 20,
+  },
+  formContainer: {
+    paddingTop: 30,
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingBottom: 30,
+    backgroundColor: Colors.light.grey,
   },
 });
 

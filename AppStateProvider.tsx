@@ -14,7 +14,7 @@ const AppStateContext = createContext<Recipe | undefined>(undefined);
 const AppDispatchContext = createContext<Dispatch | undefined>(undefined);
 
 const recipeReducer = (state: Recipe, action: Action): any => {
-  const { id, recipeId, name, quantity, unit }: any = action.payload;
+  const { id, recipeId, name, quantity }: any = action.payload;
   const recipeData = state['recipes'] as Recipe;
   switch (action.type) {
     case 'ADD_RECIPE': {
@@ -46,8 +46,7 @@ const recipeReducer = (state: Recipe, action: Action): any => {
               [id]: {
                 id,
                 name,
-                quantity: parseFloat(quantity),
-                unit,
+                quantity,
               },
             },
           },

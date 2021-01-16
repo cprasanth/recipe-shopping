@@ -19,9 +19,8 @@ export type ShoppingListParamList = {
 export interface Ingredient {
   id: string;
   name: string;
-  quantity: number;
-  unit: string;
-  [key: string]: string | number;
+  quantity: string;
+  [key: string]: string;
 }
 export interface Recipe {
   id: string;
@@ -32,9 +31,8 @@ export interface Recipe {
 export interface ShoppingList {
   id: string;
   name: string;
-  quantity: number;
-  unit: string;
-  [key: string]: string | number;
+  quantity: string;
+  [key: string]: string;
 }
 
 export type Action =
