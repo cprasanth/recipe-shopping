@@ -1,21 +1,14 @@
 import React from 'react';
-import {
-  StyleSheet,
-  TouchableHighlight,
-} from 'react-native';
+import { StyleSheet, TouchableHighlight } from 'react-native';
 import { View, Text } from '../components/Themed';
 import { useAppDispatch } from '../AppStateProvider';
-
 import Colors from '../constants/Colors';
 
 const RecipeListItem = ({ name, id, onPress }: any) => {
   const dispatch = useAppDispatch();
+
   return (
-    <TouchableHighlight
-      underlayColor={Colors.light.tint}
-      style={styles.container}
-      onPress={onPress}
-    >
+    <TouchableHighlight underlayColor={Colors.light.tint} onPress={onPress}>
       <View style={styles.recipeInfo}>
         <View style={styles.details}>
           <Text style={styles.title}>{name}</Text>
@@ -50,9 +43,6 @@ const RecipeListItem = ({ name, id, onPress }: any) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    
-  },
   recipeInfo: {
     flex: 1,
     flexDirection: 'row',

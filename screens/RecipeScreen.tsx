@@ -18,13 +18,11 @@ const keyExtractor = (id: string) => id;
 
 const RecipeScreen = (props: any) => {
   const recipeData = useAppState()['recipes'] as Recipe;
+  const recipeListItems = Object.keys(recipeData);
   const dispatch = useAppDispatch();
 
   const [newRecipe, setNewRecipe] = useState('');
 
-  const onChangeName = (text: string) => {
-    setNewRecipe(text);
-  };
   const addRecipe = () => {
     if (newRecipe === '') {
       alert('Enter your new recipe name');
@@ -40,6 +38,7 @@ const RecipeScreen = (props: any) => {
       Keyboard.dismiss();
     }
   };
+
   const renderRecipe = ({ item }: any) => {
     const {
       navigation: { navigate },
@@ -56,14 +55,14 @@ const RecipeScreen = (props: any) => {
       />
     );
   };
-  const recipeListData = Object.keys(recipeData);
+
   return (
     <View style={styles.container}>
-      {recipeListData.length < 1 && (
+      {recipeListItems.length < 1 && (
         <Text style={styles.emptyText}>No recipes found!</Text>
       )}
       <FlatList
-        data={recipeListData}
+        data={recipeListItems}
         keyExtractor={keyExtractor}
         renderItem={renderRecipe}
       />
@@ -72,7 +71,7 @@ const RecipeScreen = (props: any) => {
         <Text>Recipe name</Text>
         <TextInput
           style={styles.input}
-          onChangeText={(text) => onChangeName(text)}
+          onChangeText={(text) => setNewRecipe(text)}
           value={newRecipe}
           placeholder='Enter name here...'
         />

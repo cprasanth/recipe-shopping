@@ -7,10 +7,10 @@ import {
   Button,
   Keyboard,
 } from 'react-native';
+import { v4 as uuidv4 } from 'uuid';
 import IngredientListItem from '../components/IngredientListItem';
 import { View, Text } from '../components/Themed';
 import { useAppDispatch, useAppState } from '../AppStateProvider';
-import { v4 as uuidv4 } from 'uuid';
 import { Ingredient, Recipe } from '../types';
 import Colors from '../constants/Colors';
 
@@ -18,19 +18,20 @@ const keyExtractor = (id: string) => id;
 
 const IngredientsScreen = (props: any) => {
   const dispatch = useAppDispatch();
-  const [newIngredient, setNewIngredient] = useState({
+  const initialState = {
     name: '',
     quantity: '',
-  });
+  };
+  const [newIngredient, setNewIngredient] = useState(initialState);
   const { name, quantity } = newIngredient;
   const recipeId = props.route.params.recipeId;
   const recipeData = useAppState()['recipes'] as Recipe;
   const recipe = recipeData[recipeId] as Recipe;
   const ingredientsData = recipe && (recipe.ingredients as Ingredient);
+  const ingredientListItems = ingredientsData && Object.keys(ingredientsData);
 
-  const onChangeText = (text: string, field: string) => {
+  const onChangeText = (text: string, field: string) =>
     setNewIngredient({ ...newIngredient, [field]: text });
-  };
 
   const addIngredient = () => {
     if (name === '') {
@@ -47,29 +48,25 @@ const IngredientsScreen = (props: any) => {
           quantity,
         },
       });
-      setNewIngredient({
-        name: '',
-        quantity: '',
-      });
+      setNewIngredient(initialState);
       Keyboard.dismiss();
     }
   };
-  const renderIngredients = ({ item }: any) => {
-    return (
-      <IngredientListItem
-        ingredient={ingredientsData && ingredientsData[item]}
-        recipeId={recipeId}
-      />
-    );
-  };
-  const ingredientListData = ingredientsData && Object.keys(ingredientsData);
+
+  const renderIngredients = ({ item }: any) => (
+    <IngredientListItem
+      ingredient={ingredientsData && ingredientsData[item]}
+      recipeId={recipeId}
+    />
+  );
+
   return (
     <View style={styles.container}>
-      {ingredientListData && ingredientListData.length < 1 && (
+      {ingredientListItems && ingredientListItems.length < 1 && (
         <Text style={styles.emptyText}>No ingredients found!</Text>
       )}
       <FlatList
-        data={ingredientListData}
+        data={ingredientListItems}
         keyExtractor={keyExtractor}
         renderItem={renderIngredients}
       />

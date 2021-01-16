@@ -1,27 +1,19 @@
 import React from 'react';
-import {
-  StyleSheet,
-  TouchableHighlight,
-} from 'react-native';
+import { StyleSheet, TouchableHighlight } from 'react-native';
 import { View, Text } from '../components/Themed';
 import { useAppDispatch } from '../AppStateProvider';
-
 import Colors from '../constants/Colors';
 
 const ShoppingListItem = ({ ingredient }: any) => {
   const dispatch = useAppDispatch();
   const { id, name, quantity }: any = ingredient;
+
   return (
-    <TouchableHighlight
-      underlayColor={Colors.light.tint}
-      style={styles.container}
-    >      
+    <TouchableHighlight underlayColor={Colors.light.tint}>
       <View style={styles.recipeInfo}>
         <View style={styles.details}>
           <Text style={styles.title}>{name}</Text>
-          <Text style={styles.quantity}>
-            {quantity}
-          </Text>
+          <Text style={styles.quantity}>{quantity}</Text>
         </View>
         <TouchableHighlight
           onPress={() =>
@@ -41,9 +33,6 @@ const ShoppingListItem = ({ ingredient }: any) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    
-  },
   recipeInfo: {
     flex: 1,
     flexDirection: 'row',

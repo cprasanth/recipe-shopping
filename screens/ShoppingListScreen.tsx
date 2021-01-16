@@ -6,19 +6,20 @@ import { View, Text } from '../components/Themed';
 import { ShoppingList } from '../types';
 
 const keyExtractor = (id: string) => id;
+
 const ShoppingListScreen = () => {
   const shoppingList = useAppState()['shoppingList'] as ShoppingList;
+  const shoppingListItems = Object.keys(shoppingList);
 
-  const renderShoppingList = ({ item }: any) => {
-    const ingredient = shoppingList[item];
-    return <ShoppingListItem ingredient={ingredient} />;
-  };
-  const shoppingListData = Object.keys(shoppingList);
+  const renderShoppingList = ({ item }: any) => (
+    <ShoppingListItem ingredient={shoppingList[item]} />
+  );
+
   return (
     <View style={styles.container}>
-      {shoppingListData.length > 0 ? (
+      {shoppingListItems.length > 0 ? (
         <FlatList
-          data={shoppingListData}
+          data={shoppingListItems}
           keyExtractor={keyExtractor}
           renderItem={renderShoppingList}
         />
