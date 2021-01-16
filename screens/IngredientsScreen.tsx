@@ -62,7 +62,8 @@ const IngredientsScreen = (props: any) => {
 
   return (
     <View style={styles.container}>
-      {ingredientListItems && ingredientListItems.length < 1 && (
+      {(!ingredientListItems ||
+        (ingredientListItems && ingredientListItems.length < 1)) && (
         <Text style={styles.emptyText}>No ingredients found!</Text>
       )}
       <FlatList
