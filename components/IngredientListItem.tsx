@@ -15,7 +15,7 @@ const IngredientListItem = ({ ingredient, recipeId }: any) => {
     <View style={styles.recipeInfo}>
       <View style={styles.details}>
         <Text style={styles.title}>{name}</Text>
-        <Text style={styles.title}>
+        <Text style={styles.quantity}>
           {quantity}
         </Text>
       </View>
@@ -51,6 +51,10 @@ const styles = StyleSheet.create({
   title: {
     color: Colors.light.text,
     fontWeight: 'bold',
+    fontSize: 16,
+  },
+  quantity: {
+    color: Colors.light.text,
     fontSize: 16,
   },
 });
